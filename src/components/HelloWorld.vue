@@ -1,94 +1,47 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+    <button @click="openModal">open modal</button>
+    <button @click="openToast">open toast</button>
+    <modal 
+      v-show="showModal"
+      :options="modalOptions"
+      ref="modal"
+      >
+      <div slot="modal-content">是的护肤水水水水</div>
+      </modal>
   </div>
 </template>
 
 <script>
+import modal from './Modal'
 export default {
   name: 'HelloWorld',
+  components:{
+    'modal': modal
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'modal',
+      modalOptions: {
+        title: '模块框'
+      },
+      showModal: false
+    }
+  },
+  methods: {
+    openModal(){
+      this.showModal = true
+      this.$refs.modal.confirm().then(() => {
+        this.showModal = false
+        console.log('queding')
+      }).catch(e => {
+        this.showModal = false
+        console.log('cancel')
+      })
+    },
+    openToast() {
+      this.$toast({msg:'ttttttttttttttttttt'})
     }
   }
 }
